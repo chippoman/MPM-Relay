@@ -16,7 +16,7 @@ async def main():
     async for message in client.iter_messages(-1001368873436, from_user='mining_pools_monitor_bot', limit=1, reverse=False):
         last_id = config['Telegram']['last_id']
 
-        if (message.id > int(last_id)):
+        if (message.id > int(last_id) and "eth pool" in message.text):
             bot = discum.Client(token=config['Discord']['token'])
             config['Telegram']['last_id'] = str(message.id)
             with open('config.ini', 'w') as configfile:
