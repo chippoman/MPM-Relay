@@ -6,8 +6,9 @@ import os
 config = configparser.ConfigParser()
 
 cwd = os.path.dirname(__file__)
+configFile = os.path.join(cwd, 'config.ini')
 sessionStorage = os.path.join(cwd, 'anon.session')
-config.read(os.path.join(cwd, 'config.ini'))
+config.read(configFile)
 
 api_id = config['Telegram']['api_id']
 api_hash = config['Telegram']['api_hash']
@@ -20,8 +21,8 @@ async def main():
         if (message.id > int(last_id) and "eth pool" in message.text):
             bot = discum.Client(token=config['Discord']['token'])
             config['Telegram']['last_id'] = str(message.id)
-            with open('config.ini', 'w') as configfile:
-                config.write(configfile)
+            with open(configFile, 'w') as configOutput:
+                config.write(configOutput)
             bot.sendMessage(config['Discord']['channel_id'], message.text)
    
 with client:
