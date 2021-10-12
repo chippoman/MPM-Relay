@@ -4,9 +4,10 @@ import configparser
 import os
 
 config = configparser.ConfigParser()
-config.read('config.ini')
-cwd = os.path.dirname(os.path.realpath('__file__'))
+
+cwd = os.path.dirname(__file__)
 sessionStorage = os.path.join(cwd, 'anon.session')
+config.read(os.path.join(cwd, 'config.ini'))
 
 api_id = config['Telegram']['api_id']
 api_hash = config['Telegram']['api_hash']
