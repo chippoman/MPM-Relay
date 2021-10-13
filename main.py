@@ -19,11 +19,13 @@ async def main():
         last_id = config['Telegram']['last_id']
 
         if (message.id > int(last_id)):
+            body = "```" + message.text.replace("```", "") + "\nSource: Mining Pools Monitor bot on Telegram```"
+
             bot = discum.Client(token=config['Discord']['token'])
             config['Telegram']['last_id'] = str(message.id)
             with open((configFile), 'w') as configOutput:
                 config.write(configOutput)
-            bot.sendMessage(config['Discord']['channel_id'], message.text)
-   
+            bot.sendMessage(config['Discord']['channel_id'], body)
+
 with client:
     client.loop.run_until_complete(main())
